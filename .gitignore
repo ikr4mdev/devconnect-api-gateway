@@ -49,6 +49,8 @@ lerna-debug.log*
 .temp
 .tmp
 
+audit-report.json
+
 # Runtime data
 pids
 *.pid
