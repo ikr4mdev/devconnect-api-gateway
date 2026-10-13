@@ -21,7 +21,10 @@ const authServiceCredentials = credentials.createSsl(
         transport: Transport.GRPC,
         options: {
           package: 'auth',
-          protoPath: join(process.cwd(), 'proto/auth.proto'),
+          protoPath: join(
+            process.cwd(),
+            'node_modules/@devconnect-microservices/devconnect-contracts/proto/auth.proto',
+          ),
           url: '127.0.0.1:50051',
           credentials: authServiceCredentials,
         },
