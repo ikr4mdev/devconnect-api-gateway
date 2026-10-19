@@ -2,7 +2,6 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { credentials } from '@grpc/grpc-js';
 import { Module } from '@nestjs/common';
-import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
@@ -27,12 +26,14 @@ const authServiceCredentials = credentials.createSsl(
           ),
           url: '127.0.0.1:50051',
           credentials: authServiceCredentials,
+          loader: {
+            keepCase: false,
+          },
         },
       },
     ]),
   ],
   controllers: [AuthController],
-  exports: [JwtAuthGuard],
-  providers: [JwtAuthGuard, AuthService],
+  providers: [AuthService],
 })
 export class AuthModule {}

@@ -21,10 +21,13 @@ describe('AuthGuard', () => {
     modulusLength: 2048,
   });
 
-  const publicKeyPem = publicKey.export({
+  const exportedKey = publicKey.export({
     type: 'spki',
     format: 'pem',
   });
+
+  const publicKeyPem =
+    typeof exportedKey === 'string' ? exportedKey : exportedKey.toString();
 
   (gatewayConfig as { jwtPublicKey: string }).jwtPublicKey = publicKeyPem;
 

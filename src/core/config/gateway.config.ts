@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { isAbsolute, resolve } from 'node:path';
+import { isAbsolute } from 'node:path';
 
 function requiredEnv(name: string) {
   const value: unknown = process.env[name];

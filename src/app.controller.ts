@@ -1,14 +1,17 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
-import {
-  type AuthenticatedRequest,
-  JwtAuthGuard,
-} from './modules/auth/guard/jwt-auth.guard';
+import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
+import type { JwtPayloadType } from './core/interfaces';
+import { CurrentUser } from './core';
 
 @Controller()
 export class AppController {
   @Get('protected')
-  @UseGuards(JwtAuthGuard)
-  protected(@Req() user: AuthenticatedRequest) {
-    return user.user;
+  protected() {
+    return 'work';
+  }
+
+  @Get('me')
+  @HttpCode(HttpStatus.OK)
+  async getCurrentUser(@CurrentUser() data: JwtPayloadType) {
+    return { data };
   }
 }

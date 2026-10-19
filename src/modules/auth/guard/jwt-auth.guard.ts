@@ -9,14 +9,9 @@ import { Request } from 'express';
 import * as jose from 'jose';
 
 import type { KeyObject } from 'node:crypto';
-import { gatewayConfig } from '../../../core';
-
-export interface AuthenticatedRequest extends Request {
-  user: {
-    sub: string;
-    email: string;
-  };
-}
+import { gatewayConfig, IS_PUBLIC_KEY } from '../../../core';
+import { Reflector } from '@nestjs/core';
+import type { AuthenticatedRequest } from '../../../core/interfaces';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate, OnModuleInit {
@@ -33,7 +28,18 @@ export class JwtAuthGuard implements CanActivate, OnModuleInit {
     }
   }
 
+  constructor(private readonly reflector: Reflector) {}
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+    if (isPublic) {
+      return true;
+    }
+
     const request: AuthenticatedRequest = context
       .switchToHttp()
       .getRequest<AuthenticatedRequest>();
@@ -54,7 +60,7 @@ export class JwtAuthGuard implements CanActivate, OnModuleInit {
       throw new UnauthorizedException('Missing Authorization header');
     }
 
-    const parts = header.split(' ');
+    const parts = header.trim().split(/\s+/);
     if (parts.length !== 2) {
       throw new UnauthorizedException('Invalid Authorization header');
     }
@@ -77,6 +83,7 @@ export class JwtAuthGuard implements CanActivate, OnModuleInit {
         algorithms: ['RS256'],
         audience: gatewayConfig.audience,
         issuer: gatewayConfig.issuer,
+        requiredClaims: ['exp', 'sub', 'email'],
       });
     } catch {
       throw new UnauthorizedException('Invalid or expired token.');
