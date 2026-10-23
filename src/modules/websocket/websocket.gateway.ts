@@ -1,4 +1,5 @@
 import { JwtPayloadType, JwtTokenService } from '@/core';
+import { Logger } from '@nestjs/common';
 import {
   Ack,
   ConnectedSocket,
@@ -15,6 +16,8 @@ import { Server, Socket } from 'socket.io';
 export class WebsocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
+  private readonly logger = new Logger(WebsocketGateway.name);
+
   constructor(private readonly jwtTokenService: JwtTokenService) {}
 
   @WebSocketServer()
@@ -34,17 +37,18 @@ export class WebsocketGateway
         client.data.user = payload;
         next();
       } catch {
+        this.logger.warn('WebSocket connection rejected: invalid token');
         next(new Error('Unauthorized: invalid token'));
       }
     });
   }
 
   handleConnection(client: Socket) {
-    console.log('user connect: ', client.id);
+    this.logger.log(`User connected: ${client.id}`);
   }
 
   handleDisconnect(client: Socket) {
-    console.log('user disconnect: ', client.id);
+    this.logger.log(`User disconnected: ${client.id}`);
   }
 
   @SubscribeMessage('ping_server')
