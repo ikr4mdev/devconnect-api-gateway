@@ -1,8 +1,7 @@
-import { IsString, IsNotEmpty, Length, Matches } from 'class-validator';
+import { IsString, Length, Matches } from 'class-validator';
 
 export class VerifyEmailDto {
   @IsString({ message: 'The verification token must be text.' })
-  @IsNotEmpty({ message: 'Please provide a verification token.' })
   @Length(32, 64, {
     message:
       'The verification token appears to be invalid. Please check the link in your email and try again.',

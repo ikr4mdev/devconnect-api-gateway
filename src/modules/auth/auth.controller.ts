@@ -1,15 +1,19 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
-import { Public } from '../../core';
-import { ResendVerificationDto } from './dto/resend-verification.dto';
-import { VerifyEmailDto } from './dto/verify-email.dto';
 import {
   AuthResponse,
   OperationResponse,
   RegisterResponse,
 } from '@devconnect-microservices/devconnect-contracts';
+import {
+  ForgotPasswordDto,
+  LoginDto,
+  RegisterDto,
+  ResendVerificationDto,
+  ResetPasswordDto,
+  VerifyEmailDto,
+} from './dto';
+import { Public } from '@/core/decorators/public.decorator';
 
 @Controller('auth')
 @Public()
@@ -17,6 +21,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @HttpCode(HttpStatus.CREATED)
   async register(@Body() data: RegisterDto): Promise<RegisterResponse> {
     return this.authService.register(data);
   }
@@ -25,6 +30,22 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async login(@Body() data: LoginDto): Promise<AuthResponse> {
     return this.authService.login(data);
+  }
+
+  @Post('forgot-password')
+  @HttpCode(HttpStatus.OK)
+  async forgotPassword(
+    @Body() data: ForgotPasswordDto,
+  ): Promise<OperationResponse> {
+    return this.authService.forgotPassword(data);
+  }
+
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  async resetPassword(
+    @Body() data: ResetPasswordDto,
+  ): Promise<OperationResponse> {
+    return this.authService.resetPassword(data);
   }
 
   @Post('resend-verification')

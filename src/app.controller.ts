@@ -1,6 +1,6 @@
 import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
-import type { JwtPayloadType } from './core/interfaces';
 import { CurrentUser } from './core';
+import { type JwtPayloadType } from './core/interfaces';
 
 @Controller()
 export class AppController {

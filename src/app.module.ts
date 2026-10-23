@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/guard/jwt-auth.guard';
-import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { GlobalHttpExceptionFilter } from './core/errors';
+import { GlobalHttpExceptionFilter } from './core';
 
 @Module({
   imports: [AuthModule],

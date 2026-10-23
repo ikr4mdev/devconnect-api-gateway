@@ -66,13 +66,6 @@ export class GlobalHttpExceptionFilter implements ExceptionFilter {
     if (isGrpcException(exception)) {
       const values = exception.metadata.get(metadataKey);
 
-      console.log('[Gateway] gRPC error:', {
-        code: exception.code,
-        details: exception.details,
-        metadataValues: values,
-        firstValueType: typeof values[0],
-      });
-
       const raw = values[0];
 
       if (isValidAppErrorCode(raw)) {

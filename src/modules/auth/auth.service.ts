@@ -1,20 +1,26 @@
 import { type ClientGrpc } from '@nestjs/microservices';
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { Observable, firstValueFrom } from 'rxjs';
-import { RegisterDto } from './dto/register.dto';
-
-import { LoginDto } from './dto/login.dto';
-import { ResendVerificationDto } from './dto/resend-verification.dto';
-import { VerifyEmailDto } from './dto/verify-email.dto';
 import {
   AuthResponse,
+  ForgotPasswordRequest,
   LoginRequest,
   OperationResponse,
   RegisterRequest,
   RegisterResponse,
   ResendVerificationRequest,
+  ResetPasswordRequest,
   VerifyEmailRequest,
 } from '@devconnect-microservices/devconnect-contracts';
+
+import {
+  ForgotPasswordDto,
+  LoginDto,
+  RegisterDto,
+  ResendVerificationDto,
+  ResetPasswordDto,
+  VerifyEmailDto,
+} from './dto';
 
 interface AuthGrpcService {
   register(data: RegisterRequest): Observable<RegisterResponse>;
@@ -23,6 +29,8 @@ interface AuthGrpcService {
     data: ResendVerificationRequest,
   ): Observable<OperationResponse>;
   verifyEmail(data: VerifyEmailRequest): Observable<OperationResponse>;
+  forgotPassword(data: ForgotPasswordRequest): Observable<OperationResponse>;
+  resetPassword(data: ResetPasswordRequest): Observable<OperationResponse>;
 }
 
 @Injectable()
@@ -55,5 +63,13 @@ export class AuthService implements OnModuleInit {
 
   async verifyEmail(data: VerifyEmailDto): Promise<OperationResponse> {
     return firstValueFrom(this.authGrpcService.verifyEmail(data));
+  }
+
+  async forgotPassword(data: ForgotPasswordDto): Promise<OperationResponse> {
+    return firstValueFrom(this.authGrpcService.forgotPassword(data));
+  }
+
+  async resetPassword(data: ResetPasswordDto): Promise<OperationResponse> {
+    return firstValueFrom(this.authGrpcService.resetPassword(data));
   }
 }
