@@ -3,10 +3,11 @@ import { AppController } from './app.controller';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/guard/jwt-auth.guard';
-import { GlobalHttpExceptionFilter } from './core';
+import { GlobalHttpExceptionFilter, JwtTokenModule } from './core';
+import { WebsocketModule } from './modules/websocket/websocket.module';
 
 @Module({
-  imports: [AuthModule],
+  imports: [AuthModule, WebsocketModule, JwtTokenModule],
   controllers: [AppController],
   providers: [
     {
