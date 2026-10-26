@@ -6,10 +6,10 @@ import {
 import type { KeyObject } from 'node:crypto';
 import * as jose from 'jose';
 import { gatewayConfig } from '../config';
-import { JwtPayloadType } from '../interfaces';
+import type { VerifiedJwtPayloadType } from '../interfaces';
 
 @Injectable()
-export class JwtTokenService implements OnModuleInit {
+export class  JwtTokenService implements OnModuleInit {
   private publicKey!: CryptoKey | KeyObject | Uint8Array;
 
   async onModuleInit(): Promise<void> {
@@ -23,7 +23,7 @@ export class JwtTokenService implements OnModuleInit {
     }
   }
 
-  public async verifyToken(token: string): Promise<JwtPayloadType> {
+  public async verifyToken(token: string): Promise<VerifiedJwtPayloadType> {
     let payload: jose.JWTVerifyResult<jose.JWTPayload>;
 
     try {
@@ -51,6 +51,6 @@ export class JwtTokenService implements OnModuleInit {
       throw new UnauthorizedException('Invalid or expired token.');
     }
 
-    return { sub, email };
+    return { sub, email, exp: payload.payload.exp };
   }
 }

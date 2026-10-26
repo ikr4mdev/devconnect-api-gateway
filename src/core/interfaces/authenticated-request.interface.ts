@@ -5,6 +5,10 @@ export interface JwtPayloadType {
   email: string;
 }
 
+export interface VerifiedJwtPayloadType extends JwtPayloadType {
+  exp: number;
+}
+
 export interface AuthenticatedRequest extends Request {
   user?: JwtPayloadType;
 }
