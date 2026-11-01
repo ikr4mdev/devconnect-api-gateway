@@ -5,9 +5,10 @@ import { AuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/guard/jwt-auth.guard';
 import { GlobalHttpExceptionFilter, JwtTokenModule } from './core';
 import { WebsocketModule } from './modules/websocket/websocket.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
-  imports: [AuthModule, WebsocketModule, JwtTokenModule],
+  imports: [AuthModule, WebsocketModule, JwtTokenModule, UsersModule],
   controllers: [AppController],
   providers: [
     {
