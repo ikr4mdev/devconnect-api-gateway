@@ -4,7 +4,7 @@ import {
   AuthResponse,
   OperationResponse,
   RegisterResponse,
-} from '@devconnect-microservices/devconnect-contracts';
+} from '@ikr4mdev/devconnect-contracts';
 import {
   ForgotPasswordDto,
   LoginDto,

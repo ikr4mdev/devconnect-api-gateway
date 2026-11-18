@@ -1,4 +1,4 @@
-import { AppErrorCode } from '@devconnect-microservices/devconnect-contracts';
+import { AppErrorCode } from '@ikr4mdev/devconnect-contracts';
 import { Metadata } from '@grpc/grpc-js';
 import {
   ExceptionFilter,

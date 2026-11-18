@@ -14,7 +14,7 @@ import { UsersService } from './users.service';
           package: 'users.v1',
           protoPath: join(
             process.cwd(),
-            'node_modules/@devconnect-microservices/devconnect-contracts/proto/users/v1/users.proto',
+            'node_modules/@ikr4mdev/devconnect-contracts/proto/users/v1/users.proto',
           ),
           url: '127.0.0.1:5002',
           loader: {

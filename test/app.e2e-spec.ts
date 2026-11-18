@@ -1,17 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import {
-  HttpStatus,
-  INestApplication,
-  ValidationPipe,
-} from '@nestjs/common';
+import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
 import { AppModule } from './../src/app.module';
 import { AuthService } from '@/modules/auth/auth.service';
-import {
-  AppErrorCode,
-  GrpcStatusMap,
-} from '@devconnect-microservices/devconnect-contracts';
+import { AppErrorCode, GrpcStatusMap } from '@ikr4mdev/devconnect-contracts';
 import { mapHttp } from '@/core/errors/grpc-to-http.mapper';
 import { Metadata } from '@grpc/grpc-js';
 import { randomBytes } from 'node:crypto';

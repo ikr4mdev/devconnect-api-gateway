@@ -1,5 +1,5 @@
 import { CurrentUser } from '@/core';
-import type { UsersV1 } from '@devconnect-microservices/devconnect-contracts';
+import type { UsersV1 } from '@ikr4mdev/devconnect-contracts';
 import { Controller, Get } from '@nestjs/common';
 import { UsersService } from './users.service';
 

@@ -52,6 +52,7 @@ describe('AuthController', () => {
 
   it('registers a new user and returns the created user', async () => {
     const registerDto = {
+      displayName: 'Master User',
       email: 'test@test.com',
       password: 'testPassword',
     };
@@ -220,6 +221,7 @@ describe('AuthController', () => {
   // Invalid
   it('rejects an invalid email via DTO validation, before the service', async () => {
     const registerDto = {
+      displayName: 'Master User',
       email: 'invalidEmail@test',
       password: 'StrongPassword',
     };
@@ -231,7 +233,9 @@ describe('AuthController', () => {
 
     expect(res.body.statusCode).toBe(400);
     expect(res.body.message).toEqual(
-      expect.arrayContaining([expect.stringMatching(/valid email/i)]),
+      expect.arrayContaining([
+        expect.stringMatching(/email address is not valid/i),
+      ]),
     );
 
     expect(authService.register).not.toHaveBeenCalled();
@@ -239,6 +243,7 @@ describe('AuthController', () => {
 
   it('returns 400 when the service rejects a valid registration', async () => {
     const registerDto = {
+      displayName: 'Master User',
       email: 'valid@example.com',
       password: 'StrongPassword',
     };

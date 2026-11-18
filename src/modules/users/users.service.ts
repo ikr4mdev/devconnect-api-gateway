@@ -1,4 +1,4 @@
-import type { UsersV1 } from '@devconnect-microservices/devconnect-contracts';
+import type { UsersV1 } from '@ikr4mdev/devconnect-contracts';
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import type { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom, Observable } from 'rxjs';
